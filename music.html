@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>MindEase - Music</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
@@ -13,15 +13,28 @@
     <a href="music.html">Music</a>
   </nav>
 
+  <button class="toggle-dark" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+
   <div class="container">
     <h2>Relaxing Sounds</h2>
-    <p>Click to play calming audio during your session.</p>
+    <p>Click to play calming music during your meditation.</p>
 
     <audio controls>
-      <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+      <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg" />
       Your browser does not support the audio tag.
     </audio>
   </div>
 
+  <script>
+    if (localStorage.getItem("theme") === "dark") {
+      document.body.classList.add("dark");
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark");
+      const theme = document.body.classList.contains("dark") ? "dark" : "light";
+      localStorage.setItem("theme", theme);
+    }
+  </script>
 </body>
 </html>
