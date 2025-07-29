@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>MindEase - Home</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
@@ -13,11 +13,24 @@
     <a href="music.html">Music</a>
   </nav>
 
+  <button class="toggle-dark" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+
   <div class="container">
     <h1>Welcome to MindEase</h1>
     <p>Your personal space for calm, focus, and clarity.</p>
     <p>Select an option from the menu to begin your journey.</p>
   </div>
 
+  <script>
+    if (localStorage.getItem("theme") === "dark") {
+      document.body.classList.add("dark");
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark");
+      const theme = document.body.classList.contains("dark") ? "dark" : "light";
+      localStorage.setItem("theme", theme);
+    }
+  </script>
 </body>
 </html>
