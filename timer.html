@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>MindEase - Meditation</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
@@ -13,27 +13,63 @@
     <a href="music.html">Music</a>
   </nav>
 
+  <button class="toggle-dark" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+
   <div class="container">
     <h2>Start Your Meditation</h2>
-    <div id="timer">05:00</div>
+    <div id="timer" style="font-size: 3rem; margin: 20px;">05:00</div>
     <button onclick="start()">Start</button>
+    <button onclick="pause()">Pause</button>
+    <button onclick="reset()">Reset</button>
   </div>
 
   <script>
+    if (localStorage.getItem("theme") === "dark") {
+      document.body.classList.add("dark");
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark");
+      const theme = document.body.classList.contains("dark") ? "dark" : "light";
+      localStorage.setItem("theme", theme);
+    }
+
     let seconds = 300;
     let timerInterval;
+
+    function updateDisplay() {
+      const min = String(Math.floor(seconds / 60)).padStart(2, '0');
+      const sec = String(seconds % 60).padStart(2, '0');
+      document.getElementById("timer").innerText = `${min}:${sec}`;
+    }
 
     function start() {
       if (timerInterval) return;
       timerInterval = setInterval(() => {
+        if (seconds <= 0) {
+          clearInterval(timerInterval);
+          timerInterval = null;
+          alert("Session complete!");
+          return;
+        }
         seconds--;
-        let min = String(Math.floor(seconds / 60)).padStart(2, '0');
-        let sec = String(seconds % 60).padStart(2, '0');
-        document.getElementById('timer').innerText = `${min}:${sec}`;
-        if (seconds <= 0) clearInterval(timerInterval);
+        updateDisplay();
       }, 1000);
     }
-  </script>
 
+    function pause() {
+      clearInterval(timerInterval);
+      timerInterval = null;
+    }
+
+    function reset() {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      seconds = 300;
+      updateDisplay();
+    }
+
+    updateDisplay();
+  </script>
 </body>
 </html>
